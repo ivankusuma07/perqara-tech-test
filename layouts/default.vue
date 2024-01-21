@@ -1,8 +1,8 @@
-<script lang="ts" setup></script>
 <template>
   <div>
-    <p>This is where our header component will be </p>
+    <!-- <p>This is where our header component will be </p> -->
+    <Navbar />
     <slot />
-    <p>This is where our footer component will be </p>
+    <!-- <Footer /> -->
   </div>
 </template>
