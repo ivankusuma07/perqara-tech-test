@@ -28,7 +28,7 @@
                   <div class="flex flex-row justify-center">
                     <img src="~/assets/img/star.svg" alt="star" class="mr-2" />
                     <span class="inline-block text-2xl font-bold text-[#E5E5E5]">
-                      {{ movie.vote_average }}
+                      {{ movie.vote_average.toFixed(1) }}
                     </span>
                   </div>
                   <div class="text-[#E5E5E5] text-center text-wrap">
@@ -43,7 +43,7 @@
                 <div
                   class="relative top-8 left-[10.8rem] bg-[#1E232BCC] text-[#E5E5E5] w-[48px] h-[32px] text-lg font-bold text-center"
                 >
-                  {{ movie.vote_average }}
+                  {{ movie.vote_average.toFixed(1) }}
                 </div>
                 <img
                   v-if="movie.poster_path !== null"
@@ -77,144 +77,144 @@
 </template>
 <script lang="ts" setup>
 definePageMeta({
-  layout: 'default',
-})
+  layout: "default",
+});
 // const classBtn = ref('')
-const pops = ref('active')
-const release = ref('')
-const listMovie = ref([])
-const sortBy = ref('popularity.desc')
+const pops = ref("active");
+const release = ref("");
+const listMovie = ref([]);
+const sortBy = ref("popularity.desc");
 const clickBtnPopularity = () => {
-  release.value = ''
-  pops.value = 'active'
-  sortBy.value = 'popularity.desc'
-  getMovieList()
-}
+  release.value = "";
+  pops.value = "active";
+  sortBy.value = "popularity.desc";
+  getMovieList();
+};
 const clickBtnReleaseDate = () => {
-  release.value = 'active'
-  pops.value = ''
-  sortBy.value = 'primary_release_date.desc'
-  getMovieList()
-}
+  release.value = "active";
+  pops.value = "";
+  sortBy.value = "primary_release_date.desc";
+  getMovieList();
+};
 
 const listGenre = [
   {
     id: 28,
-    name: 'Action',
+    name: "Action",
   },
   {
     id: 12,
-    name: 'Adventure',
+    name: "Adventure",
   },
   {
     id: 16,
-    name: 'Animation',
+    name: "Animation",
   },
   {
     id: 35,
-    name: 'Comedy',
+    name: "Comedy",
   },
   {
     id: 80,
-    name: 'Crime',
+    name: "Crime",
   },
   {
     id: 99,
-    name: 'Documentary',
+    name: "Documentary",
   },
   {
     id: 18,
-    name: 'Drama',
+    name: "Drama",
   },
   {
     id: 10751,
-    name: 'Family',
+    name: "Family",
   },
   {
     id: 14,
-    name: 'Fantasy',
+    name: "Fantasy",
   },
   {
     id: 36,
-    name: 'History',
+    name: "History",
   },
   {
     id: 27,
-    name: 'Horror',
+    name: "Horror",
   },
   {
     id: 10402,
-    name: 'Music',
+    name: "Music",
   },
   {
     id: 9648,
-    name: 'Mystery',
+    name: "Mystery",
   },
   {
     id: 10749,
-    name: 'Romance',
+    name: "Romance",
   },
   {
     id: 878,
-    name: 'Science Fiction',
+    name: "Science Fiction",
   },
   {
     id: 10770,
-    name: 'TV Movie',
+    name: "TV Movie",
   },
   {
     id: 53,
-    name: 'Thriller',
+    name: "Thriller",
   },
   {
     id: 10752,
-    name: 'War',
+    name: "War",
   },
   {
     id: 37,
-    name: 'Western',
+    name: "Western",
   },
-]
+];
 
 const filterGenre = (data: Array<{}>) => {
   // console.log(data)
   const filteredGenre = listGenre.filter((item) => {
-    return data.includes(item.id)
-  })
+    return data.includes(item.id);
+  });
 
   const names = filteredGenre.map(function (item) {
-    return item['name']
-  })
+    return item["name"];
+  });
 
-  return names.slice(0, -1).join(', ') + ', ' + names.at(-1) + ''
-}
+  return names.slice(0, -1).join(", ") + ", " + names.at(-1) + "";
+};
 
 const getMovieList = async () => {
   const options = {
-    method: 'GET',
+    method: "GET",
     headers: {
-      accept: 'application/json',
+      accept: "application/json",
       Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MjY3ZWE5ZjVlMDBjNTgyMzQxN2IxMDk4ZmI1YTM2OSIsInN1YiI6IjY1YWEyNGI4N2NhYTQ3MDEyYjA5NjhmOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.BvNPwYCOx7H87JF9NMefAG0iMpGmVpyImF_imaf5FMU',
+        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MjY3ZWE5ZjVlMDBjNTgyMzQxN2IxMDk4ZmI1YTM2OSIsInN1YiI6IjY1YWEyNGI4N2NhYTQ3MDEyYjA5NjhmOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.BvNPwYCOx7H87JF9NMefAG0iMpGmVpyImF_imaf5FMU",
     },
-  }
+  };
 
   const { data: movie, refresh } = await useFetch(
     `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=${sortBy.value}`,
     {
-      method: 'GET',
+      method: "GET",
       headers: {
-        accept: 'application/json',
+        accept: "application/json",
         Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MjY3ZWE5ZjVlMDBjNTgyMzQxN2IxMDk4ZmI1YTM2OSIsInN1YiI6IjY1YWEyNGI4N2NhYTQ3MDEyYjA5NjhmOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.BvNPwYCOx7H87JF9NMefAG0iMpGmVpyImF_imaf5FMU',
+          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MjY3ZWE5ZjVlMDBjNTgyMzQxN2IxMDk4ZmI1YTM2OSIsInN1YiI6IjY1YWEyNGI4N2NhYTQ3MDEyYjA5NjhmOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.BvNPwYCOx7H87JF9NMefAG0iMpGmVpyImF_imaf5FMU",
       },
     }
-  )
-  listMovie.value = movie.value.results ?? []
-  console.log(movie.value)
+  );
+  listMovie.value = movie.value.results ?? [];
+  console.log(movie.value);
   watchEffect(() => {
-    refresh()
-  })
+    refresh();
+  });
   //   .then(response => response.json())
   //   .then(response => console.log(response))
   //   .catch(err => console.error(err));)
@@ -223,9 +223,9 @@ const getMovieList = async () => {
   //   .then(response => response.json())
   //   .then(response => console.log(response))
   //   .catch(err => console.error(err));
-}
+};
 
-getMovieList()
+getMovieList();
 </script>
 <style lang="postcss" scoped>
 .wrapper-discover {
