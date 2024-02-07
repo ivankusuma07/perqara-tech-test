@@ -211,7 +211,7 @@ const getMovieList = async () => {
     }
   );
   listMovie.value = movie.value.results ?? [];
-  console.log(movie.value);
+  // console.log(movie.value);
   watchEffect(() => {
     refresh();
   });

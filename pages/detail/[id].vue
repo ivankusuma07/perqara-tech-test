@@ -42,7 +42,7 @@
                     <img src="~/assets/img/star.svg" alt="star" class="mr-2" />
                     <span class="inline-block text-2xl font-bold text-[#E5E5E5]">
                       {{
-                        listMovie.vote_average ? listMovie.vote_average.toFixed(1) : '0.0'
+                        listMovie.vote_average ? listMovie.vote_average.toFixed(1) : "0.0"
                       }}
                     </span>
                   </div>
@@ -146,7 +146,7 @@
                     <div class="font-semibold text-4xl">
                       {{
                         review.author_details.rating === null
-                          ? '0.0'
+                          ? "0.0"
                           : review.author_details.rating.toFixed(1)
                       }}
                     </div>
@@ -168,81 +168,81 @@
 <script lang="ts" setup>
 // import useRouter from 'nuxt'
 // const { currentRoute } = useRouter();
-const route = useRoute()
-const listMovie = ref(<unknown>{})
-const listReview = ref([])
+const route = useRoute();
+const listMovie = ref(<unknown>{});
+const listReview = ref([]);
 const getDetailMovieList = async () => {
   const { data: movie, refresh } = await useFetch(
     `https://api.themoviedb.org/3/movie/${route.params.id}?language=en-US'`,
     {
-      method: 'GET',
+      method: "GET",
       headers: {
-        accept: 'application/json',
+        accept: "application/json",
         Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MjY3ZWE5ZjVlMDBjNTgyMzQxN2IxMDk4ZmI1YTM2OSIsInN1YiI6IjY1YWEyNGI4N2NhYTQ3MDEyYjA5NjhmOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.BvNPwYCOx7H87JF9NMefAG0iMpGmVpyImF_imaf5FMU',
+          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MjY3ZWE5ZjVlMDBjNTgyMzQxN2IxMDk4ZmI1YTM2OSIsInN1YiI6IjY1YWEyNGI4N2NhYTQ3MDEyYjA5NjhmOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.BvNPwYCOx7H87JF9NMefAG0iMpGmVpyImF_imaf5FMU",
       },
     }
-  )
-  listMovie.value = movie.value
+  );
+  listMovie.value = movie.value;
   watchEffect(() => {
-    refresh()
-  })
-}
-getDetailMovieList()
+    refresh();
+  });
+};
+getDetailMovieList();
 
 const getReview = async () => {
   const { data: review, refresh } = await useFetch(
     `https://api.themoviedb.org/3/movie/${route.params.id}/reviews?language=en-US'`,
     {
-      method: 'GET',
+      method: "GET",
       headers: {
-        accept: 'application/json',
+        accept: "application/json",
         Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MjY3ZWE5ZjVlMDBjNTgyMzQxN2IxMDk4ZmI1YTM2OSIsInN1YiI6IjY1YWEyNGI4N2NhYTQ3MDEyYjA5NjhmOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.BvNPwYCOx7H87JF9NMefAG0iMpGmVpyImF_imaf5FMU',
+          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MjY3ZWE5ZjVlMDBjNTgyMzQxN2IxMDk4ZmI1YTM2OSIsInN1YiI6IjY1YWEyNGI4N2NhYTQ3MDEyYjA5NjhmOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.BvNPwYCOx7H87JF9NMefAG0iMpGmVpyImF_imaf5FMU",
       },
     }
-  )
+  );
   // console.log(review.value.results)
-  listReview.value = review?.value?.results ?? {}
+  listReview.value = review?.value?.results ?? {};
   watchEffect(() => {
-    refresh()
-  })
-}
+    refresh();
+  });
+};
 
-getReview()
+getReview();
 
 const getYear = (data: string) => {
-  console.log(data)
+  // console.log(data)
   // const datas = data.slice(0, 4)
-  const datas = new Date(data).getFullYear()
-  return datas
-}
+  const datas = new Date(data).getFullYear();
+  return datas;
+};
 
 const filterGenre = (data: any) => {
   const names = data.map(function (item: any) {
-    return item['name']
-  })
+    return item["name"];
+  });
 
-  return names.slice(0, -1).join(', ') + ', ' + names.at(-1) + ''
-}
+  return names.slice(0, -1).join(", ") + ", " + names.at(-1) + "";
+};
 
 const formatDate = (date: any) => {
   // let options =
   // console.log(date)
-  return new Intl.DateTimeFormat('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  }).format(new Date(date))
-}
+  return new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(new Date(date));
+};
 
 const formatCurrency = (digit: number) => {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
     maximumFractionDigits: 2,
-  }).format(digit)
-}
+  }).format(digit);
+};
 </script>
 <style lang="postcss" scoped>
 .page-wrapper {
